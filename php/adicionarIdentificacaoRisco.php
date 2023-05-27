@@ -40,5 +40,6 @@ $_SESSION['identificacoes'] = $identificacoes;
 var_dump ($_SESSION['identificacoes']);
 
 header('Location:gravarDados.php');
+echo ("hello);
 
 ?>
