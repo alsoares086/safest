@@ -25,22 +25,10 @@ try{
     $_SESSION['estado'] = $estado;
     $_SESSION['complemento'] = $complemento;
 
-    $conn = new PDO("mysql:host=localhost;dbname=safest_v1","root","");
-    $conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION); /* linha de captura erro  */
-    $sql = "INSERT INTO inventarios(nome,data) VALUES ('$nomeInve','$data')";
-    $conn->exec($sql);
-    $inventario_id = $conn->lastInsertId();
-    $sql = "INSERT INTO enderecos(rua,bairro,numero,cep,cidade,estado,id_inventarios,complemento) VALUES ('$rua','$bairro','$numero','$cep','$cidade','$estado','$inventario_id','$complemento')";
-    $conn->exec($sql);
-
-
-    //adicionar os outros dados da seção
-    
-
 }catch(PDOException $erro){
     echo "Erro no cadastro do Inventário. Tente novamente!".$erro->getMessage();
 }    
-    echo "Inventário foi Cadastrado com sucesso!"; 
+    header("location: ../formCadastrarRelatorio.php"); 
 
     
 

@@ -19,7 +19,7 @@ $matrizAvaliacao = $_POST['matrix'];
 
 $identificao = new IdentificacaoRisco(); //objeto que guarda os dados no array 
 
-$identificao -> setFuncao( $funcao); 
+$identificao -> setFuncao($funcao); 
 $identificao -> setDescricaoAtividade ($descricao); 
 $identificao -> setEquipamento($equipamento);
 $identificao -> setTipoRisco($tipoRisco);
@@ -32,14 +32,24 @@ $identificao -> setProbabilidadeReferencia($probabilidadeReferencia);
 $identificao ->setConsequenciaReferencia($consequenciaReferencia);
 $identificao ->setMatrizAvaliacao($matrizAvaliacao);
 
-$identificacoes = array();
+$identificacoes = unserialize($_SESSION['identificacoes']);
+
+if($identificacoes == null){
+    $identificacoes = array();
+}
+
 
 array_push($identificacoes,$identificao);
 
-$_SESSION['identificacoes'] = $identificacoes;
-var_dump ($_SESSION['identificacoes']);
+$_SESSION['identificacoes'] = serialize($identificacoes);
 
-header('Location:gravarDados.php');
-echo ("hello);
+
+if($_POST['acao'] == "adicionar"){
+    header('Location:../formCadastrarRelatorio.php');
+}else{
+    header('Location:gravarDados.php');
+}
+
+
 
 ?>

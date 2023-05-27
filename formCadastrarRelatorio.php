@@ -104,9 +104,10 @@
                 <option value="individual">Exposição individual ou reduzido número de potenciais vítima</option>
                 <option value="varias">Exposição com lesão ou adoecimento de diversas vítimas simultaneamente</option>
             </select><br><br><br>
-          <button>Adcionar Novo Perigo</button>
-          <button>Finalizar</button>
+          <button name="acao" value="finalizar">Finalizar</button>
+          <button name="acao" value="adicionar">Adicionar Novo Perigo</button>
     </form>
+
  
     <script src="javascript/redirecionar.js"></script>
 </body>
