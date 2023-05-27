@@ -32,6 +32,8 @@ try{
         $conn->exec($sql);
     }
 
+    echo "Alice";
+
     
 
 }catch(PDOException $erro){
