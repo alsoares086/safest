@@ -1,4 +1,4 @@
 
 function carregarImagens(){
-    location.href="AdicionarFotos.html";
+    location.href="./AdicionarFotos.html";
 }

@@ -16,12 +16,12 @@ $numeroImagens = count($_FILES["fotos"]["name"]);
        //$conteudo = addslashes($conteudo);
         fclose($fp);     
 
-        $foto->setArquivo($conteudo);
+        $foto->setConteudo($conteudo);
         array_push($fotos,$foto);
     }
-    
+
     echo count ($fotos);
     session_start();
-    $_SESSION['fotos'] = $fotos; 
+    $_SESSION['fotos'] = serialize ($fotos); 
     header('Location:gravarDados.php');
 ?>

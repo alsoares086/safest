@@ -1,6 +1,7 @@
 <?php
 session_start();
 require_once "IdentificacaoRisco.php";
+require_once "Fotos.php";
 
 try{
   
@@ -15,7 +16,9 @@ try{
     $cidade = $_SESSION['cidade'];
     $estado = $_SESSION['estado'] ;
     $complemento = $_SESSION['complemento'];
-                          
+    $fotos = unserialize($_SESSION['fotos']);
+    
+
     $conn = new PDO("mysql:host=localhost;dbname=safest_v1","root","");
     $conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION); /* linha de captura erro  */
     
@@ -30,15 +33,16 @@ try{
     $identificacoes = unserialize($_SESSION['identificacoes']);
 
     $sql = "INSERT INTO identificacaorisco (descricao,equipamento,tipoRisco,AgenteCondicao,fonte,consequenciaExposicao,probabilidade,
-    consequencia,medidasAdministrativas,probabilidadeReferencia,consequenciaReferencia,matrizAvaliacaofuncao,idInve)
-    VALUES (:descricao,:equipamento,:tipoRisco,:AgenteCondicao,:fonte,:consequenciaExposicao,:probabilidade,
-    :consequencia,:medidasAdministrativas,:probabilidadeReferencia,:consequenciaReferencia,:matrizAvaliacao,:funcao,:id)";
+    consequencia,medidasAdministrativas,probabilidadeReferencia,consequenciaReferencia,matrizAvaliacao,funcao,idInve)
+    VALUES (:descricao,:equipamento,:tipoRisco,:agenteCondicao,:fonte,:consequenciaExposicao,:probabilidade,
+    :consequencia,:medidasAdministrativas,:probabilidadeReferencia,:consequenciaReferencia,:matrizAvaliacao,:funcao,:idInve)";
     $stmt = $conn->prepare($sql);
     foreach ($identificacoes as $identificacao) {
-        $stmt->bindValue(':descricao', $identificacao->getDescricao());
+        $stmt->bindValue(':descricao', $identificacao->getDescricaoAtividade());
         $stmt->bindValue(':equipamento', $identificacao->getEquipamento());
-        $stmt->bindValue(':tipoRisco', $identificacao->getFuncaoTipoRisco());
-        $stmt->bindValue(':AgenteCondicao', $identificacao->getAgenteCondicao());
+        $stmt->bindValue(':tipoRisco', $identificacao->getTipoRisco());
+        $stmt->bindValue(':agenteCondicao', $identificacao->getAgenteCondicao());
+        $stmt->bindValue(':fonte', $identificacao->getFonte());
         $stmt->bindValue(':consequenciaExposicao', $identificacao->getConsequenciaExposicao());
         $stmt->bindValue(':probabilidade', $identificacao->getProbabilidade());
         $stmt->bindValue(':consequencia', $identificacao->getConsequencia());
@@ -47,10 +51,21 @@ try{
         $stmt->bindValue(':consequenciaReferencia', $identificacao->getConsequenciaReferencia());
         $stmt->bindValue(':matrizAvaliacao', $identificacao->getMatrizAvaliacao());
         $stmt->bindValue(':funcao', $identificacao->getFuncao());
-        $stmt->bindValue(':id',$inventario_id);
+        $stmt->bindValue(':idInve',$inventario_id);
         $stmt->execute(); // Executa a declaração preparada
     }
-
+  
+    
+    $sql = "INSERT INTO fotos(nome,tipo,idInventario,conteudo) VALUES (?,?,?,?)";
+    $stmt = $conn->prepare($sql);
+    foreach ($fotos as $foto){
+        $stmt->bindValue(1, $foto->getnome());
+        $stmt->bindValue(2, $foto->getTipo());
+        $stmt->bindValue(3, $inventario_id);
+        $stmt->bindValue(4, $foto->getconteudo());
+        $stmt->execute(); // Executa a declaração preparada
+    }
+    
 }catch(PDOException $erro){
     echo "Erro no cadastro do Inventário. Tente novamente!".$erro->getMessage();
 }    

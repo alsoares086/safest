@@ -47,7 +47,7 @@ $_SESSION['identificacoes'] = serialize($identificacoes);
 if($_POST['acao'] == "adicionar"){
     header('Location:../formCadastrarRelatorio.php');
 }else{
-    header('Location:gravarDados.php');
+    header('Location:../AdicionarFotos.html');
 }
 
 

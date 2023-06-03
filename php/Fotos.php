@@ -3,7 +3,8 @@
     private $id;
     private $nome;
     private $tipo;
-    private $arquivo;
+    private $conteudo;
+    private $idInventario;
     private Imagem $imagem;
 
     function getId(){
@@ -12,6 +13,7 @@
     function setId($id){
         $this->id = $id;
     }
+
     function getNome(){
         return $this->nome;
     }
@@ -24,12 +26,20 @@
     function setTipo($tipo){
         $this->tipo = $tipo;
     }
-    function getArquivo(){
-        return $this->arquivo;
+    function getConteudo(){
+        return $this->conteudo;
     }
-    function setArquivo($arquivo){
-        $this->arquivo = $arquivo;
+    function setConteudo($conteudo){
+        $this->conteudo = $conteudo;
     }
+
+    function getIdInventario(){
+        return $this->idInventario;
+    }
+    function setIdInventario($idInventario){
+        $this->idInventario = $idInventario;
+    }
+
     function Imagem(){
         return $this->imagem;
     }
